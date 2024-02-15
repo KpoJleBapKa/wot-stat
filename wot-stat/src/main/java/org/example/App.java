@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,26 +13,16 @@ public class App {
     private static final String WOT_API_URL = "https://api.worldoftanks.eu/wot";
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        displayPlayerStats(getPlayerData(getPlayerName()));
+    }
 
+    private static String getPlayerName() {
         System.out.print("Enter player name: ");
-        String playerName = scanner.nextLine();
-
-        scanner.close();
-
-        JSONObject playerData = getPlayerData(playerName);
-
-        if (playerData != null && playerData.has("data")) {
-            JSONArray playerArray = playerData.getJSONArray("data");
-
-            if (playerArray.length() > 0) {
-                JSONObject playerObject = playerArray.getJSONObject(0);
-                displayPlayerStats(playerObject);
-            } else {
-                System.out.println("Player not found.");
-            }
-        } else {
-            System.out.println("Failed to retrieve player data.");
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            return reader.readLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
         }
     }
 
@@ -49,16 +38,16 @@ public class App {
             int responseCode = connection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+
+                    return new JSONObject(response.toString());
                 }
-                in.close();
-
-                return new JSONObject(response.toString());
             } else {
                 System.out.println("HTTP request failed with error code: " + responseCode);
             }
@@ -70,28 +59,60 @@ public class App {
     }
 
     private static void displayPlayerStats(JSONObject playerObject) {
-        long accountId = playerObject.getLong("account_id");
+        if (playerObject != null && playerObject.has("data")) {
+            JSONArray playerArray = playerObject.getJSONArray("data");
 
-        JSONObject statistics = getStatistics(accountId);
+            if (playerArray.length() > 0) {
+                JSONObject playerData = playerArray.getJSONObject(0);
+                long accountId = playerData.getLong("account_id");
 
-        if (statistics != null && statistics.has("data")) {
-            JSONObject playerStats = statistics.getJSONObject("data").getJSONObject(String.valueOf(accountId));
-            JSONObject allStats = playerStats.getJSONObject("statistics").getJSONObject("all");
+                JSONObject statistics = getStatistics(accountId);
 
-            int battles = allStats.getInt("battles");
-            int wins = allStats.getInt("wins");
-            int damageDealt = allStats.getInt("damage_dealt");
+                if (statistics != null && statistics.has("data")) {
+                    JSONObject playerStats = statistics.getJSONObject("data").getJSONObject(String.valueOf(accountId));
+                    JSONObject allStats = playerStats.optJSONObject("statistics").optJSONObject("all");
 
-            System.out.println("Player ID: " + accountId);
-            System.out.println("Battles: " + battles);
-            double winRate = ((double) wins / battles) * 100;
-            System.out.println("Win Rate: " + String.format("%.2f", winRate) + "%");
-            System.out.println("Average Damage: " + Math.round((double) damageDealt / battles));
+                    if (allStats != null) {
+                        int battles = allStats.optInt("battles", 0);
+                        int wins = allStats.optInt("wins", 0);
+                        int hits = allStats.optInt("hits_percents", 0);
+                        int damageDealt = allStats.optInt("damage_dealt", 0);
+                        int xp = allStats.optInt("xp", 0);
+                        int maxFrags = allStats.optInt("max_frags", 0);
+                        int maxXP = allStats.optInt("max_xp", 0);
+
+                        double winRate = battles > 0 ? ((double) wins / battles) * 100 : 0;
+                        double hitRate = hits > 0 ? Math.min((double) hits, 100) : 0;
+
+
+                        long clanId = playerData.optLong("clan_id", 0);
+                        String clanName = getClanName(clanId);
+
+                        System.out.println("Player ID: " + accountId);
+                        System.out.println("Battles: " + battles);
+                        System.out.println("Win Rate: " + String.format("%.2f", winRate) + "%");
+                        System.out.println("Hit Rate: " + String.format("%.2f", hitRate) + "%");
+                        System.out.println("Average Damage: " + Math.round(battles > 0 ? (double) damageDealt / battles : 0));
+                        System.out.println("Average XP: " + Math.round(battles > 0 ? (double) xp / battles : 0));
+                        System.out.println("Max Frags: " + maxFrags);
+                        System.out.println("Max XP: " + maxXP);
+
+                        if (!clanName.isEmpty()) {
+                            System.out.println("Clan Name: " + clanName);
+                        }
+                    } else {
+                        System.out.println("Player statistics not available.");
+                    }
+                } else {
+                    System.out.println("Failed to retrieve player statistics.");
+                }
+            } else {
+                System.out.println("Player not found.");
+            }
         } else {
-            System.out.println("Failed to retrieve player statistics.");
+            System.out.println("Failed to retrieve player data.");
         }
     }
-
 
 
     private static JSONObject getStatistics(long accountId) {
@@ -106,16 +127,63 @@ public class App {
             int responseCode = connection.getResponseCode();
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+
+                    return new JSONObject(response.toString());
                 }
-                in.close();
+            } else {
+                System.out.println("HTTP request failed with error code: " + responseCode);
+            }
 
-                return new JSONObject(response.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String getClanName(long clanId) {
+        if (clanId > 0) {
+            JSONObject clanInfo = getClanInfo(clanId);
+
+            if (clanInfo != null && clanInfo.has("data")) {
+                JSONObject clanData = clanInfo.getJSONObject("data");
+
+                if (clanData.has("name")) {
+                    return clanData.getString("name");
+                }
+            }
+        }
+        return "";
+    }
+
+    private static JSONObject getClanInfo(long clanId) {
+        try {
+            String apiUrl = WOT_API_URL + "/clans/info/?application_id=" + APPLICATION_ID + "&clan_id=" + clanId;
+
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    StringBuilder response = new StringBuilder();
+                    String inputLine;
+
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+
+                    return new JSONObject(response.toString());
+                }
             } else {
                 System.out.println("HTTP request failed with error code: " + responseCode);
             }
