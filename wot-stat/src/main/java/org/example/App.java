@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 
 public class App {
 
@@ -26,10 +24,16 @@ public class App {
         JSONObject playerData = getPlayerData(playerName);
 
         if (playerData != null && playerData.has("data")) {
-            JSONObject playerObject = playerData.getJSONArray("data").getJSONObject(0);
-            displayPlayerStats(playerObject);
+            JSONArray playerArray = playerData.getJSONArray("data");
+
+            if (playerArray.length() > 0) {
+                JSONObject playerObject = playerArray.getJSONObject(0);
+                displayPlayerStats(playerObject);
+            } else {
+                System.out.println("Player not found.");
+            }
         } else {
-            System.out.println("Player not found.");
+            System.out.println("Failed to retrieve player data.");
         }
     }
 
@@ -54,17 +58,7 @@ public class App {
                 }
                 in.close();
 
-                JSONObject playerData = new JSONObject(response.toString());
-                System.out.println("API Response: " + playerData);
-
-                JSONArray playerArray = playerData.optJSONArray("data");
-
-                if (playerArray != null && playerArray.length() > 0) {
-                    long accountId = playerArray.getJSONObject(0).optLong("account_id");
-                    return getStatistics(accountId);
-                } else {
-                    System.out.println("Player not found.");
-                }
+                return new JSONObject(response.toString());
             } else {
                 System.out.println("HTTP request failed with error code: " + responseCode);
             }
@@ -75,28 +69,30 @@ public class App {
         return null;
     }
 
-
     private static void displayPlayerStats(JSONObject playerObject) {
         long accountId = playerObject.getLong("account_id");
 
-        // Отримання статистики гравця
         JSONObject statistics = getStatistics(accountId);
 
-        if (statistics != null) {
-            JSONObject allStats = statistics.optJSONObject("all");
+        if (statistics != null && statistics.has("data")) {
+            JSONObject playerStats = statistics.getJSONObject("data").getJSONObject(String.valueOf(accountId));
+            JSONObject allStats = playerStats.getJSONObject("statistics").getJSONObject("all");
 
-            if (allStats != null) {
-                System.out.println("Player ID: " + accountId);
-                System.out.println("Battles: " + allStats.optInt("battles"));
-                System.out.println("Win Rate: " + allStats.optDouble("wins") + "%");
-                System.out.println("Average Damage: " + allStats.optInt("damage_dealt") / allStats.optInt("battles"));
-            } else {
-                System.out.println("Statistics not available for the player.");
-            }
+            int battles = allStats.getInt("battles");
+            int wins = allStats.getInt("wins");
+            int damageDealt = allStats.getInt("damage_dealt");
+
+            System.out.println("Player ID: " + accountId);
+            System.out.println("Battles: " + battles);
+            double winRate = ((double) wins / battles) * 100;
+            System.out.println("Win Rate: " + String.format("%.2f", winRate) + "%");
+            System.out.println("Average Damage: " + Math.round((double) damageDealt / battles));
         } else {
             System.out.println("Failed to retrieve player statistics.");
         }
     }
+
+
 
     private static JSONObject getStatistics(long accountId) {
         try {
@@ -119,7 +115,7 @@ public class App {
                 }
                 in.close();
 
-                return new JSONObject(response.toString()).getJSONObject("data").getJSONObject(String.valueOf(accountId));
+                return new JSONObject(response.toString());
             } else {
                 System.out.println("HTTP request failed with error code: " + responseCode);
             }
