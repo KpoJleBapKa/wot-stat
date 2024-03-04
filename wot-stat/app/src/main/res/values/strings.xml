@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WotStat</string>
+    <string name="button_enter">Find</string>
+    <string name="plain_text">Enter nick-name</string>
+    <string name="calc_text">Calculator</string>
+    <string name="hint_1">enter</string>
+    <string name="hint_2">enter</string>
+    <string name="button_1">find</string>
+</resources>
