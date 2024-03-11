@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SecondActivity">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="130dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="173dp"
-        android:layout_marginTop="242dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="369dp"
-        android:onClick="startNewActivity"
-        android:text="Next"
+        android:id="@+id/button2"
+        android:layout_width="142dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="245dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginBottom="366dp"
+        android:onClick="goBack"
+        android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
