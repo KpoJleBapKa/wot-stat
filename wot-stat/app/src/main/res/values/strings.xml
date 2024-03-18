@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">WotStat</string>
-    <string name="logo">Просто текст</string>
-    <string name="button1">Кнопка 1</string>
-    <string name="firstButton">Кнопка 2</string>
-    <string name="button3">Кнопка 3</string>
-
+    <string name="wotStatText">WotStat</string>
+    <string name="playerStatButton">Гравця</string>
+    <string name="clanStatButton">Клану</string>
+    <string name="wotStatInfo">Знайти статистику</string>
+    <string name="userBack">Повернутися назад</string>
+    <string name="writeNickname">Введіть нік-нейм користувача</string>
+    <string name="writeClanName">Введіть назву клану</string>
+    <string name="findstatButton">Розрахувати</string>
+    <string name="statText">
+Статистика гравця: \n
+Клан: \n
+Кількість боїв: \n
+% перемог: \n
+% влучень: \n
+Середня шкода: \n
+Середній досвід: \n
+Максимум знищено за бій: \n
+Максимальний досвід за бій: \n
+    </string>
 </resources>

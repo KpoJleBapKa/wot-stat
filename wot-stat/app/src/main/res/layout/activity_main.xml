@@ -2,22 +2,66 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/background_photo"
+    tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="130dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="173dp"
-        android:layout_marginTop="242dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="369dp"
-        android:onClick="startNewActivity"
-        android:text="Next"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginBottom="545dp"
+        android:text="@string/wotStatText"
+        android:textColor="@color/textColor"
+        android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="107sp"
+        android:layout_height="56sp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="89dp"
+        android:backgroundTint="@color/playerButtonColor"
+        android:onClick="playerStatPage"
+        android:text="@string/playerStatButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="107sp"
+        android:layout_height="56sp"
+        android:layout_marginTop="89dp"
+        android:layout_marginEnd="70dp"
+        android:backgroundTint="@color/clanButtonColor"
+        android:onClick="clanStatPage"
+        android:text="@string/clanStatButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="130dp"
+        android:text="@string/wotStatInfo"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

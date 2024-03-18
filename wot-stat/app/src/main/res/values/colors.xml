@@ -2,6 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="bg">#78778C</color>
-    <color name="text">#E1B1FA</color>
+    <color name="textColor">#E4E7E4</color>
+    <color name="playerButtonColor">#607860</color>
+    <color name="clanButtonColor">#779377</color>
+    <color name="backButton">#637463</color>
+
 </resources>
