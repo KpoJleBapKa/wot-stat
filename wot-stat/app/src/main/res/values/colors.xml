@@ -6,5 +6,6 @@
     <color name="playerButtonColor">#607860</color>
     <color name="clanButtonColor">#779377</color>
     <color name="backButton">#637463</color>
-
+    <color name="statButton">#668D66</color>
+    <color name="grey">#B9BDB9</color>
 </resources>

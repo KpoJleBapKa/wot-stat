@@ -34,4 +34,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,playerStat.class);
         startActivity(intent);
     }
+
+    public void calculationPage (View v) {
+        Intent intent = new Intent(this,calculations.class);
+        startActivity(intent);
+    }
 }

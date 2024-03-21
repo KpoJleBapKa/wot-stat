@@ -4,10 +4,24 @@
     <string name="playerStatButton">Гравця</string>
     <string name="clanStatButton">Клану</string>
     <string name="wotStatInfo">Знайти статистику</string>
+    <string name="statInfo">Розрахувати статистику</string>
     <string name="userBack">Повернутися назад</string>
     <string name="writeNickname">Введіть нік-нейм користувача</string>
+
+    <string name="avgDMGCalc">Розрахунок середньої шкоди</string>
+    <string name="avgPercentageCalc">Розрахунок середнього відсотку перемог</string>
+    <string name="avgAliveCalc">Розрахунок середнього відсотку виживання</string>
+    <string name="avgExpCalc">Розрахунок середнього досвіду</string>
+
+    <string name="wantAvg">бажана середня шкода</string>
+    <string name="battles">кількість боїв на танку</string>
+    <string name="avg">середня шкода</string>
+
     <string name="writeClanName">Введіть назву клану</string>
     <string name="findstatButton">Розрахувати</string>
+    <string name="calcStat">Розрахунки</string>
+    <string name="kroll">By Kroll</string>
+    <string name="menu">Меню</string>
     <string name="statText">
 Статистика гравця: \n
 Клан: \n
@@ -18,5 +32,16 @@
 Середній досвід: \n
 Максимум знищено за бій: \n
 Максимальний досвід за бій: \n
+    </string>
+    <string name="clanStatText">
+Клану: \n
+Кількість гравців: \n
+    </string>
+    <string name="avgDamage">
+        Кількість боїв задля отримання бажаної середньої шкоди: \n
+        Якщо грати на 5000 DMG - \n
+        Якщо грати на 4500 DMG - \n
+        Якщо грати на 4000 DMG - \n
+        Якщо грати на 3500 DMG - \n
     </string>
 </resources>
