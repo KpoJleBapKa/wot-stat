@@ -28,7 +28,7 @@ public class clanStat extends AppCompatActivity {
         clanStatTextView = findViewById(R.id.textView4);
     }
 
-    public void getBack(View v) {
+    public void userBack(View v) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

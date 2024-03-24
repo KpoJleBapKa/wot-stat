@@ -9,6 +9,19 @@
     tools:context=".clanStat">
 
     <Button
+        android:id="@+id/button55"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="1"
+        android:backgroundTint="@color/backButton"
+        android:fontFamily="@font/pacifico"
+        android:onClick="userBack"
+        android:text="@string/userBack"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
