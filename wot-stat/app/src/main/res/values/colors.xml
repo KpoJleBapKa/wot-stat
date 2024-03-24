@@ -8,4 +8,5 @@
     <color name="backButton">#637463</color>
     <color name="statButton">#668D66</color>
     <color name="grey">#B9BDB9</color>
+    <color name="semiTransparentGrey">#80808080</color>
 </resources>

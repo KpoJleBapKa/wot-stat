@@ -8,6 +8,19 @@
     android:background="@drawable/playerstat_image"
     tools:context=".playerStat">
 
+    <Button
+        android:id="@+id/button54"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="1"
+        android:backgroundTint="@color/backButton"
+        android:fontFamily="@font/pacifico"
+        android:onClick="userBack"
+        android:text="@string/userBack"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="284dp"
@@ -47,6 +60,7 @@
         android:backgroundTint="@color/backButton"
         android:onClick="calculatePlayerStat"
         android:text="@string/findstatButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText" />
@@ -55,6 +69,7 @@
         android:id="@+id/textView4"
         android:layout_width="394dp"
         android:layout_height="263dp"
+        android:background="@color/semiTransparentGrey"
         android:text="@string/statText"
         android:textColor="@color/textColor"
         android:textSize="20sp"

@@ -1,4 +1,5 @@
 package com.example.wotstat;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -152,5 +153,9 @@ public class playerStat extends AppCompatActivity {
             e.printStackTrace();
             runOnUiThread(() -> playerStatTextView.setText("Ви не ввели нік-нейм гравця."));
         }
+    }
+    public void userBack (View v) {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 }

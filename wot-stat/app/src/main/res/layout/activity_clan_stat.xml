@@ -17,6 +17,7 @@
         android:backgroundTint="@color/backButton"
         android:onClick="searchClan"
         android:text="@string/findstatButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText" />
@@ -55,6 +56,7 @@
         android:id="@+id/textView4"
         android:layout_width="394dp"
         android:layout_height="263dp"
+        android:background="@color/semiTransparentGrey"
         android:text="@string/clanStatText"
         android:textColor="@color/textColor"
         android:textSize="20sp"

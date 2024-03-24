@@ -17,6 +17,7 @@
         android:fontFamily="@font/pacifico"
         android:onClick="userBack"
         android:text="@string/userBack"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,6 +71,7 @@
         android:backgroundTint="@color/backButton"
         android:onClick="calculateAvgDamage"
         android:text="@string/findstatButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,9 +80,10 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="394dp"
+        android:layout_height="195dp"
         android:layout_marginTop="128dp"
+        android:background="@color/semiTransparentGrey"
         android:text="@string/avgDamage"
         android:textColor="@color/white"
         android:textSize="20sp"

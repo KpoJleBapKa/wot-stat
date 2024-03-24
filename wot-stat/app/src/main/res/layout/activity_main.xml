@@ -35,6 +35,7 @@
         android:backgroundTint="@color/playerButtonColor"
         android:onClick="playerStatPage"
         android:text="@string/playerStatButton"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -47,6 +48,7 @@
         android:backgroundTint="@color/clanButtonColor"
         android:onClick="clanStatPage"
         android:text="@string/clanStatButton"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -58,6 +60,7 @@
         android:backgroundTint="@color/statButton"
         android:onClick="calculationPage"
         android:text="@string/calcStat"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
