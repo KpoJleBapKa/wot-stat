@@ -45,7 +45,7 @@ public class calculations extends AppCompatActivity {
     }
 
     public void alivePage (View v) {
-        Intent intent = new Intent(this,AvgAlivePage.class);
+        Intent intent = new Intent(this, StatShow.class);
         startActivity(intent);
     }
 }

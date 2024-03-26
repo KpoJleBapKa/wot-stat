@@ -8,8 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-    public class AvgDamagePage extends AppCompatActivity {
-
+public class AvgDamagePage extends AppCompatActivity {
         private EditText battlesEditText;
         private EditText currentDamageEditText;
         private EditText desiredDamageEditText;
@@ -44,16 +43,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
             int[] avgDamages = {5000, 4500, 4000, 3500};
             for (int avgDamage : avgDamages) {
-                int additionalBattles = 0;
-                int currentAvgDamage = currentDamage;
-                int battles_res = battles;
-                while (currentAvgDamage < desiredDamage) {
-                    currentAvgDamage += (avgDamage - currentAvgDamage) / ++battles_res;
-                    additionalBattles++;
+                if (avgDamage <= desiredDamage) {
+                    result.append("Шкоди у розмірі ").append(avgDamage).append(" DMG не вистачить задля покращення статистики. \n");
+                } else {
+                    int additionalBattles = 0;
+                    int currentAvgDamage = currentDamage;
+                    int battles_res = battles;
+                    while (currentAvgDamage < desiredDamage) {
+                        currentAvgDamage += (avgDamage - currentAvgDamage) / ++battles_res;
+                        additionalBattles++;
+                    }
+                    result.append("Якщо грати на ").append(avgDamage).append(" DMG - ").append(additionalBattles).append(" боїв \n");
                 }
-                result.append("Якщо грати на ").append(avgDamage).append(" DMG - ").append(additionalBattles).append(" боїв \n");
             }
-
             resultTextView.setText(result.toString());
         }
 

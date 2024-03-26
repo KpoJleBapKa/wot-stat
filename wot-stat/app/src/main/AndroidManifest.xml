@@ -18,7 +18,7 @@
             android:name=".AvgExpPage"
             android:exported="false" />
         <activity
-            android:name=".AvgAlivePage"
+            android:name=".StatShow"
             android:exported="false" />
         <activity
             android:name=".AvgPercentagePage"
