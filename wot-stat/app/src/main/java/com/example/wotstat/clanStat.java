@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
@@ -18,6 +19,7 @@ public class clanStat extends AppCompatActivity {
 
     private EditText clanNameEditText;
     private TextView clanStatTextView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class clanStat extends AppCompatActivity {
 
         clanNameEditText = findViewById(R.id.editTextText);
         clanStatTextView = findViewById(R.id.textView4);
+        progressBar = findViewById(R.id.progressBar);
     }
 
     public void userBack(View v) {
@@ -34,6 +37,8 @@ public class clanStat extends AppCompatActivity {
     }
 
     public void searchClan(View view) {
+        progressBar.setVisibility(View.VISIBLE); // Показуємо індикатор перед початком запиту
+
         String clanName = clanNameEditText.getText().toString();
         String wotApiUrl = "https://api.worldoftanks.eu/wot/clans/list/?application_id=d889298af2382fa0cfeb010e26874b63&search=" + clanName;
 
@@ -46,7 +51,10 @@ public class clanStat extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                runOnUiThread(() -> clanStatTextView.setText("Failed to retrieve clan data."));
+                runOnUiThread(() -> {
+                    clanStatTextView.setText("Failed to retrieve clan data.");
+                    progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+                });
             }
 
             @Override
@@ -59,11 +67,17 @@ public class clanStat extends AppCompatActivity {
                         JSONObject clanObject = jsonData.getJSONArray("data").getJSONObject(0); // Assuming the first clan is the desired one
                         displayClanStats(clanObject);
                     } else {
-                        runOnUiThread(() -> clanStatTextView.setText("Clan not found."));
+                        runOnUiThread(() -> {
+                            clanStatTextView.setText("Clan not found.");
+                            progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    runOnUiThread(() -> clanStatTextView.setText("Failed to retrieve clan data."));
+                    runOnUiThread(() -> {
+                        clanStatTextView.setText("Failed to retrieve clan data.");
+                        progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+                    });
                 }
             }
         });
@@ -74,13 +88,19 @@ public class clanStat extends AppCompatActivity {
             String clanTag = clanObject.getString("tag");
             int membersCount = clanObject.getInt("members_count");
 
-            runOnUiThread(() -> clanStatTextView.setText(
-                    "Клан: " + clanTag + "\n" +
-                            "Кількість учасників: " + membersCount
-            ));
+            runOnUiThread(() -> {
+                clanStatTextView.setText(
+                        "Клан: " + clanTag + "\n" +
+                                "Кількість учасників: " + membersCount
+                );
+                progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор після відображення статистики
+            });
         } catch (Exception e) {
             e.printStackTrace();
-            runOnUiThread(() -> clanStatTextView.setText("Failed to display clan statistics."));
+            runOnUiThread(() -> {
+                clanStatTextView.setText("Failed to display clan statistics.");
+                progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+            });
         }
     }
 }

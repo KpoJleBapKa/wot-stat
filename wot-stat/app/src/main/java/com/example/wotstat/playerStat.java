@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
@@ -18,17 +19,21 @@ public class playerStat extends AppCompatActivity {
 
     private EditText playerNameEditText;
     private TextView playerStatTextView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_stat);
 
+        progressBar = findViewById(R.id.progressBar);
         playerNameEditText = findViewById(R.id.editTextText);
         playerStatTextView = findViewById(R.id.textView4);
     }
 
     public void calculatePlayerStat(View view) {
+        progressBar.setVisibility(View.VISIBLE); // Показуємо індикатор перед початком запиту
+
         String playerName = playerNameEditText.getText().toString();
         String wotApiUrl = "https://api.worldoftanks.eu/wot/account/list/?application_id=d889298af2382fa0cfeb010e26874b63&search=" + playerName;
 
@@ -41,7 +46,10 @@ public class playerStat extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                runOnUiThread(() -> playerStatTextView.setText("Ви не ввели нік-нейм гравця."));
+                playerStatTextView.post(() -> { // Оновлюємо інтерфейс в основному потоці
+                    playerStatTextView.setText("Ви не ввели нік-нейм гравця.");
+                    progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+                });
             }
 
             @Override
@@ -55,13 +63,22 @@ public class playerStat extends AppCompatActivity {
                         JSONObject playerObject = dataArray.getJSONObject(0);
                         displayPlayerStats(playerObject);
                     } else {
-                        runOnUiThread(() -> playerStatTextView.setText("Такого гравця не існує."));
+                        playerStatTextView.post(() -> { // Оновлюємо інтерфейс в основному потоці
+                            playerStatTextView.setText("Такого гравця не існує.");
+                            progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    runOnUiThread(() -> playerStatTextView.setText("Ви не ввели нік-нейм гравця."));
+                    playerStatTextView.post(() -> { // Оновлюємо інтерфейс в основному потоці
+                        playerStatTextView.setText("Ви не ввели нік-нейм гравця.");
+                        progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
+                    });
+                } finally {
+                    progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор після завершення обробки відповіді
                 }
             }
+
         });
     }
 
