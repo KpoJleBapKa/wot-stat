@@ -172,7 +172,6 @@ public class playerStat extends AppCompatActivity {
         }
     }
     public void userBack (View v) {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

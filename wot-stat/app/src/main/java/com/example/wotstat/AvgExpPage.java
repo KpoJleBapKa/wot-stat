@@ -72,7 +72,6 @@ public class AvgExpPage extends AppCompatActivity {
     }
 
     public void userBack(View v) {
-        Intent intent = new Intent(this, calculations.class);
-        startActivity(intent);
+        finish();
     }
 }
