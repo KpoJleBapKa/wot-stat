@@ -12,6 +12,9 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+
+        android:layout_marginTop="2dp"
         android:alpha="1"
         android:backgroundTint="@color/backButton"
         android:fontFamily="@font/pacifico"
@@ -80,10 +83,11 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="400dp"
-        android:layout_height="268dp"
+        android:layout_width="395dp"
+        android:layout_height="195dp"
         android:layout_marginTop="128dp"
         android:background="@color/semiTransparentGrey"
+        android:paddingLeft="16dp"
         android:text="@string/avgDamage"
         android:textColor="@color/white"
         android:textSize="20sp"

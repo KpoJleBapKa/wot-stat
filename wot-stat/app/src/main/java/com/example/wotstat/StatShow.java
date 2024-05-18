@@ -1,14 +1,13 @@
 package com.example.wotstat;
 
-import android.content.Intent;
-import android.graphics.Color;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 
 public class StatShow extends AppCompatActivity {
 
@@ -27,6 +26,8 @@ public class StatShow extends AppCompatActivity {
     }
 
     public void calculateStats(View view) {
+        hideKeyboard(view); // Приховуємо клавіатуру
+
         String wn8String = wn8EditText.getText().toString();
         String winRateString = winRateEditText.getText().toString();
 
@@ -46,7 +47,6 @@ public class StatShow extends AppCompatActivity {
 
         resultTextView.setText(result);
     }
-
     private String getWN8Color(int wn8) {
         String color;
         if (wn8 >= 0 && wn8 <= 590) {
@@ -82,7 +82,12 @@ public class StatShow extends AppCompatActivity {
         }
         return color;
     }
-
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
     public void userBack(View v) {
         finish();
     }

@@ -1,8 +1,9 @@
 package com.example.wotstat;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class clanStat extends AppCompatActivity {
     }
 
     public void searchClan(View view) {
+        hideKeyboard(view); // Приховуємо клавіатуру
         progressBar.setVisibility(View.VISIBLE); // Показуємо індикатор перед початком запиту
 
         String clanName = clanNameEditText.getText().toString();
@@ -100,6 +102,14 @@ public class clanStat extends AppCompatActivity {
                 clanStatTextView.setText("Failed to display clan statistics.");
                 progressBar.setVisibility(View.INVISIBLE); // Приховуємо індикатор у випадку помилки
             });
+        }
+
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }

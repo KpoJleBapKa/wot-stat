@@ -1,7 +1,9 @@
 package com.example.wotstat;
-import android.content.Intent;
+
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ public class playerStat extends AppCompatActivity {
     }
 
     public void calculatePlayerStat(View view) {
+        hideKeyboard(view); // Приховуємо клавіатуру
         progressBar.setVisibility(View.VISIBLE); // Показуємо індикатор перед початком запиту
 
         String playerName = playerNameEditText.getText().toString();
@@ -171,7 +174,15 @@ public class playerStat extends AppCompatActivity {
             runOnUiThread(() -> playerStatTextView.setText("Ви не ввели нік-нейм гравця."));
         }
     }
-    public void userBack (View v) {
+
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void userBack(View v) {
         finish();
     }
 }
